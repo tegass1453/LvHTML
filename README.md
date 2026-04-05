@@ -1,94 +1,235 @@
-# Simulator project for LVGL embedded GUI Library
+# LvHTML
 
-The [LVGL](https://github.com/lvgl/lvgl) is written mainly for microcontrollers and embedded systems however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
+[中文](#中文) | [English](#english)
 
-Using a PC simulator instead of an embedded hardware has several advantages:
-* **Costs $0** because you you don't have to buy or design PCB
-* **Fast** because you don't have to design an manufacture PCB
-* **Collaborative** because any number of developers can work in the same environment
-* **Developer friendly** because much easier and faster to debug on PC
+---
 
-## Requirements
-The PC simulator is cross platform.  **Windows, Linux and OSX** are supported, however on Windows it's easier to get started with a [another simulator](https://docs.lvgl.io/latest/en/html/get-started/pc-simulator.html) project. 
+## 中文
 
-* **SDL** a low level driver library to use graphics, handle mouse, keyboard etc.
-* This project (configured for **Eclipse CDT IDE**)
+LvHTML 是一个基于 LVGL 的轻量级 HTML 子集渲染器。
 
-## Usage
+它允许使用简单的类 HTML 语法描述 UI，并将其渲染为原生 LVGL 控件。项目目标不是实现浏览器，而是提供一个小型、可嵌入的 UI 描述层。
 
-### Get the PC project
+### 特性
 
-Clone the PC project and the related sub modules:
+* 解析基础 HTML 结构
+* 将标签映射为 LVGL 控件
+* 支持基础容器布局
+* 输入组件：
 
-```
-git clone --recursive https://github.com/littlevgl/pc_simulator_sdl_eclipse.git
-```
+  * input（单行输入）
+  * textarea（多行输入）
+  * select（下拉框）
+* 基础图形：
 
-### Install SDL
-You can download SDL from https://www.libsdl.org/
+  * rect
+  * circle
+* 文本渲染（标题、段落、内联文本）
+* 支持部分 inline style
 
-On on Linux you can install it via terminal:
-```
-sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev
-```
+### 支持标签
 
-### Install Eclipse CDT
-Download and install Eclipse CDT from  http://www.eclipse.org/cdt/
+**文本**
 
-### Import the PC simulator project
-1. Open Eclipse CDT
-2. Click **File->Import** and choose **General->Existing project into Workspace**
-3. Browse the root directory of the project and click Finish
-4. Build your project and run it
+* h1 ~ h6
+* p
+* span
+* label
+* strong
+* em
+* code
 
-## CMake
+**容器**
 
-The following steps can be used with CMake on a Unix-like system. This may also work on other OSes but has not been tested.
+* div
+* section
+* article
+* form
 
-1. Ensure CMake is installed, i.e. the `cmake` command works on the terminal.
-2. Make a new directory. The name doesn't matter but `build` will be used for this tutorial.
-3. Type `cd build`.
-4. Type `cmake ..`. CMake will generate the appropriate build files.
-5. Type `make -j4` or (more portable) `cmake --build . --parallel`.
+**输入**
 
-**NOTE:** `--parallel` is supported from CMake v3.12 onwards. If you are using an older version of CMake, remove `--parallel` from the command or use the make option.
+* input
+* textarea
+* select / option
+* button
 
-6. The binary will be in `../bin/main`, and can be run by typing that command.
+**图形**
 
-## Docker
-1. Build the docker container
-```
-docker build -t lvgl_simulator .
-```
-2. Run the docker container
-```
-docker run lvgl_simulator
-```
-GUI with docker is platform dependent. For example, on macOS you can follow 
-[this tutorial](https://cntnr.io/running-guis-with-docker-on-mac-os-x-a14df6a76efc) 
-and run a command similar to:
-```
-docker run -e DISPLAY=10.103.56.101:0 lvgl_simulator
-```
+* rect
+* circle
 
-Note that on macOS, you may need to enable indirect GLX rendering before starting Xquartz:
-```
-defaults write org.macosforge.xquartz.X11 enable_iglx -bool true
-open -a Xquartz
-```
+**其他**
 
-For Linux environments with X Server, the following will the `docker run` command. Note that the first command, `xhost +` grants access to X server to everyone.
+* img
+* a
+* br
+* hr
 
-```
-xhost +
-docker run -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix:ro -t lvgl_simulator
+### 示例
+
+```html
+<div style="padding:10px; gap:10px;">
+  <label>User Name</label>
+  <input type="text" placeholder="Enter name" />
+
+  <label>Mode</label>
+  <select>
+    <option selected>LIN</option>
+    <option>CAN</option>
+  </select>
+
+  <rect width="120" height="60" fill="#4fc3f7" text="RECT"></rect>
+</div>
 ```
 
-## Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request!
+### 使用方法
 
-If you find an issue, please report it via GitHub!
+初始化 LVGL 后调用：
+
+```c
+lv_obj_clean(lv_scr_act());
+lv_html_render_file(lv_scr_act(), "page.html");
+```
+
+如需键盘输入支持：
+
+```c
+lv_indev_set_group(keyboard_indev, lv_html_get_input_group());
+```
+
+### 限制
+
+* 不是完整 HTML/CSS 引擎
+* 不支持 JavaScript
+* CSS 支持有限（仅 inline 且属性有限）
+* 不支持复杂布局（flex/grid 不完整）
+* 字体需由 LVGL 配置（建议 ASCII）
+
+### 项目目标
+
+LvHTML 专注于简单与可移植性，适用于：
+
+* 嵌入式 UI 快速开发
+* 配置界面
+* 简单仪表盘
+
+如需完整网页支持，建议使用浏览器内核。
+
+---
+
+## English
+
+LvHTML is a lightweight HTML subset renderer built on top of LVGL.
+
+It allows describing UI using simple HTML-like syntax and renders it as native LVGL widgets. The goal is not to build a browser, but to provide a small and embeddable UI description layer.
+
+### Features
+
+* Parse basic HTML structure
+* Map tags to LVGL widgets
+* Simple layout containers
+* Input components:
+
+  * input (single line)
+  * textarea (multi-line)
+  * select (dropdown)
+* Basic graphics:
+
+  * rect
+  * circle
+* Text rendering (labels, headings, inline text)
+* Partial inline style support
+
+### Supported Tags
+
+**Text**
+
+* h1 ~ h6
+* p
+* span
+* label
+* strong
+* em
+* code
+
+**Containers**
+
+* div
+* section
+* article
+* form
+
+**Input**
+
+* input
+* textarea
+* select / option
+* button
+
+**Graphics**
+
+* rect
+* circle
+
+**Others**
+
+* img
+* a
+* br
+* hr
+
+### Example
+
+```html
+<div style="padding:10px; gap:10px;">
+  <label>User Name</label>
+  <input type="text" placeholder="Enter name" />
+
+  <label>Mode</label>
+  <select>
+    <option selected>LIN</option>
+    <option>CAN</option>
+  </select>
+
+  <rect width="120" height="60" fill="#4fc3f7" text="RECT"></rect>
+</div>
+```
+
+### Usage
+
+Initialize LVGL and call:
+
+```c
+lv_obj_clean(lv_scr_act());
+lv_html_render_file(lv_scr_act(), "page.html");
+```
+
+Optional keyboard input support:
+
+```c
+lv_indev_set_group(keyboard_indev, lv_html_get_input_group());
+```
+
+### Limitations
+
+* Not a full HTML/CSS engine
+* No JavaScript support
+* Limited CSS (inline only, partial properties)
+* No complex layout system (flex/grid not fully supported)
+* Fonts must be configured in LVGL (ASCII recommended)
+
+### Goal
+
+LvHTML focuses on simplicity and portability. Suitable for:
+
+* Embedded UI prototyping
+* Configuration panels
+* Simple dashboards
+
+If full web compatibility is required, use a browser engine instead.
+
+---
+
+## License
+
+MIT (or your preferred license)
