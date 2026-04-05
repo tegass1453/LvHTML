@@ -1,0 +1,32 @@
+CMakeFiles/main.dir/lvgl/src/extra/libs/gif/gifdec.c.obj: \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/gifdec.c \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/gifdec.h \
+  D:/mingw/lib/clang/22/include/stdint.h D:/mingw/include/stdint.h \
+  D:/mingw/include/crtdefs.h D:/mingw/include/corecrt.h \
+  D:/mingw/include/_mingw.h D:/mingw/include/_mingw_mac.h \
+  D:/mingw/include/_mingw_secapi.h \
+  D:/mingw/lib/clang/22/include/vadefs.h D:/mingw/include/vadefs.h \
+  D:/mingw/lib/clang/22/include/stddef.h D:/mingw/include/stddef.h \
+  D:/mingw/lib/clang/22/include/__stddef_wchar_t.h \
+  D:/mingw/lib/clang/22/include/__stddef_wint_t.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/lv_fs.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/../lv_conf_internal.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/../lv_conf_kconfig.h \
+  D:/LittleSAR/lv_conf.h D:/mingw/lib/clang/22/include/stdbool.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/lv_log.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/lv_types.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/lv_mem.h \
+  D:/mingw/lib/clang/22/include/__stddef_header_macro.h \
+  D:/mingw/lib/clang/22/include/__stddef_ptrdiff_t.h \
+  D:/mingw/lib/clang/22/include/__stddef_size_t.h \
+  D:/mingw/lib/clang/22/include/__stddef_null.h \
+  D:/mingw/lib/clang/22/include/__stddef_max_align_t.h \
+  D:/mingw/lib/clang/22/include/__stddef_offsetof.h \
+  D:/mingw/include/string.h D:/mingw/include/sec_api/string_s.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/lv_color.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/lv_assert.h \
+  D:/LittleSAR/lvgl/src/extra/libs/gif/../../../misc/lv_math.h \
+  D:/mingw/include/stdlib.h D:/mingw/include/corecrt_wstdlib.h \
+  D:/mingw/lib/clang/22/include/limits.h D:/mingw/include/limits.h \
+  D:/mingw/include/sec_api/stdlib_s.h D:/mingw/include/malloc.h \
+  D:/mingw/lib/clang/22/include/mm_malloc.h
